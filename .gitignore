@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.dist/
+build/
+.venv/
+venv/
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Artifacts & generated files
+data/raw/*.csv
+data/processed/*.csv
+artifacts/
+reports/*.html
+
+# Jupyter
+.ipynb_checkpoints/

@@ -1,0 +1,37 @@
+case_name: churn
+
+data:
+  n_rows: 6000
+  random_seed: 42
+  test_size: 0.2
+
+model:
+  type: logistic_regression
+  params:
+    C: 1.0
+    max_iter: 200
+    class_weight: balanced
+
+features:
+  target: churned
+  categorical:
+    - plan_type
+    - region
+  numeric:
+    - tenure_months
+    - monthly_spend
+    - usage_days_last_30
+    - sessions_last_30
+    - support_tickets_last_90
+    - payment_failures_last_90
+    - days_since_last_login
+    - satisfaction_score
+
+business:
+  # Simple profit model:
+  # - benefit_tp: value captured when we correctly flag a churner (retain them)
+  # - cost_fp: cost of offering retention incentive to someone who wouldn't churn
+  # - cost_fn: value lost when we miss a churner
+  benefit_tp: 120.0
+  cost_fp: 8.0
+  cost_fn: 80.0
