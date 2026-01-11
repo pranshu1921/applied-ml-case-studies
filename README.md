@@ -108,16 +108,36 @@ make churn
 
 ---
 
-## Proof Screenshots (Recommended)
+## Generated Artifacts (From a Real Run)
 
-Add these screenshots to your README or portfolio:
+Below are examples produced by running:
 
-1) Terminal showing the pipeline completed successfully  
-2) One plot from `artifacts/churn/plots/` (ROC or PR curve)  
-3) `reports/churn_report.md` rendered on GitHub  
-4) Folder view showing generated `artifacts/` and `reports/`
+```bash
+python -m case_studies.churn.run_all
+```
 
-This turns the repo into verifiable proof of production-style ML work.
+### Pipeline Execution
+![Pipeline execution](assets/run_terminal.png)
+
+### Model Evaluation
+
+**ROC Curve**  
+![ROC curve](assets/roc_curve.png)
+
+**Precision–Recall Curve**  
+![PR curve](assets/pr_curve.png)
+
+### Generated Business Report
+![Churn report](assets/churn_report.png)
+
+These files are generated on every run:
+
+- `artifacts/churn/model.joblib`
+- `artifacts/churn/metrics.json`
+- `artifacts/churn/plots/*.png`
+- `reports/churn_report.md`
+
+They mirror how production ML systems create reviewable outputs for debugging, validation, and decision-making.
 
 ---
 
