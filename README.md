@@ -141,6 +141,9 @@ These images are produced by running the pipelines locally.
 **ROC curve**
 ![Churn ROC](assets/roc_curve.png)
 
+**Generated report**
+![Churn report](assets/churn_report.png)
+
 ---
 
 ## Notes on Realism
