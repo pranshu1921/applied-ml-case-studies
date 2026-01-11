@@ -14,27 +14,57 @@ Unlike typical “model demo” repos, this project shows how predictions become
 
 ---
 
-## Featured Case Study (Ready to Run)
+## Featured Case Studies (Ready to Run)
 
 ### 1) Customer Churn Prediction (Product / Subscription)
 
 Predict customers likely to churn and recommend an action threshold based on **business cost vs benefit**.
 
-**One command produces everything:**
-- A trained model artifact
-- `metrics.json` with model + business metrics
-- ROC / PR / calibration plots
-- A Markdown report you can screenshot and share
+Run:
+```bash
+python -m case_studies.churn.run_all
+# or
+make churn
+```
+
+Outputs:
+- `reports/churn_report.md`
+- `artifacts/churn/metrics.json`
+- `artifacts/churn/plots/*.png`
+- `artifacts/churn/model.joblib`
 
 📁 Location: `case_studies/churn/`
+
+---
+
+### 2) Fraud Detection (Payments / Risk)
+
+Detect fraudulent transactions and select an operating threshold using **expected dollar impact** (review cost vs prevented fraud loss vs false-positive friction).
+
+Why it matters: fraud is highly imbalanced, so this case prioritizes **Precision–Recall** and chooses the operating threshold by **expected dollar impact**, not accuracy.
+
+Run:
+```bash
+python -m case_studies.fraud.run_all
+# or
+make fraud
+```
+
+Outputs:
+- `reports/fraud_report.md`
+- `artifacts/fraud/metrics.json`
+- `artifacts/fraud/plots/*.png`
+- `artifacts/fraud/model.joblib`
+
+📁 Location: `case_studies/fraud/`
 
 ---
 
 ## Tech Stack
 
 - **Python**: pandas, numpy  
-- **Modeling**: scikit-learn (logistic regression baseline)  
-- **Artifacts**: joblib model serialization + JSON metrics  
+- **Modeling**: scikit-learn  
+- **Artifacts**: joblib + JSON  
 - **Plots**: matplotlib  
 - **Config**: YAML  
 - **Quality-of-life**: Makefile + GitHub Actions (CI)
@@ -47,25 +77,14 @@ Predict customers likely to churn and recommend an action threshold based on **b
 applied-ml-case-studies/
 ├─ case_studies/
 │  ├─ churn/
-│  │  ├─ run_all.py              # end-to-end: dataset → preprocess → train → eval → report
-│  │  ├─ config.yaml             # feature + model + business settings
-│  │  ├─ README.md               # case-specific explanation
-│  │  └─ src/
-│  │     ├─ make_dataset.py      # generates realistic synthetic data (no external download)
-│  │     ├─ preprocess.py        # cleaning, splitting, leakage-safe transforms
-│  │     ├─ train.py             # model training + saving artifact
-│  │     ├─ evaluate.py          # metrics + plots + threshold selection
-│  │     └─ report.py            # builds a markdown report
+│  ├─ fraud/
 │  └─ _shared/
-│     ├─ io.py                   # paths + file helpers
-│     ├─ metrics.py              # evaluation utilities
-│     └─ plotting.py             # plotting helpers
 ├─ data/
 │  ├─ raw/
 │  └─ processed/
 ├─ artifacts/
-│  └─ churn/
-│     └─ plots/
+│  ├─ churn/
+│  └─ fraud/
 ├─ reports/
 ├─ requirements.txt
 ├─ Makefile
@@ -75,9 +94,6 @@ applied-ml-case-studies/
 ---
 
 ## Quickstart
-
-### 1) Setup
-Prereqs: **Python 3.10+**, Git
 
 ```bash
 git clone https://github.com/pranshu1921/applied-ml-case-studies.git
@@ -93,62 +109,44 @@ pip install -U pip
 pip install -r requirements.txt
 ```
 
-### 2) Run end-to-end pipeline
-```bash
-python -m case_studies.churn.run_all
-# or
-make churn
-```
+Run either case study:
 
-### 3) View outputs
-- Report: `reports/churn_report.md`
-- Plots: `artifacts/churn/plots/`
-- Metrics: `artifacts/churn/metrics.json`
-- Model: `artifacts/churn/model.joblib`
+```bash
+make churn
+make fraud
+```
 
 ---
 
-## Generated Artifacts (From a Real Run)
+## Generated Artifacts (Examples)
 
-Below are examples produced by running:
+These images are produced by running the pipelines locally.
 
-```bash
-python -m case_studies.churn.run_all
-```
+### Fraud Detection
 
-### Pipeline Execution
-![Pipeline execution](assets/run_terminal.png)
+**Pipeline execution**
+![Fraud pipeline run](assets/fraud_run_terminal.png)
 
-### Model Evaluation
+**Precision–Recall curve (key metric for imbalanced fraud)**
+![Fraud PR](assets/fraud_pr_curve.png)
 
-**ROC Curve**  
-![ROC curve](assets/roc_curve.png)
+**Generated report**
+![Fraud report](assets/fraud_report.png)
 
-**Precision–Recall Curve**  
-![PR curve](assets/pr_curve.png)
+### Churn Prediction
 
-### Generated Business Report
-![Churn report](assets/churn_report.png)
+**Pipeline execution**
+![Churn pipeline run](assets/run_terminal.png)
 
-These files are generated on every run:
-
-- `artifacts/churn/model.joblib`
-- `artifacts/churn/metrics.json`
-- `artifacts/churn/plots/*.png`
-- `reports/churn_report.md`
-
-They mirror how production ML systems create reviewable outputs for debugging, validation, and decision-making.
+**ROC curve**
+![Churn ROC](assets/roc_curve.png)
 
 ---
 
 ## Notes on Realism
 
-This project intentionally uses **synthetic-but-realistic datasets** to:
-- avoid licensing issues  
-- ensure reproducible runs for anyone cloning the repo  
-- simulate real product data patterns (tenure, usage, pricing, support, payments)
-
-The emphasis is on **workflow correctness and business reasoning**, not Kaggle leaderboard tricks.
+This project uses **synthetic-but-realistic datasets** so anyone can run the pipelines without external downloads or licensing issues.  
+The emphasis is on **workflow correctness and business reasoning**, not Kaggle-style leaderboard tuning.
 
 ---
 
@@ -157,5 +155,3 @@ The emphasis is on **workflow correctness and business reasoning**, not Kaggle l
 **Pranshu Kumar Premi**  
 LinkedIn: https://www.linkedin.com/in/pranshu-kumar  
 Email: pranshukumarpremi@gmail.com
-
-If you’re building ML/AI products or data-intensive systems, I’d love to connect.

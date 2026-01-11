@@ -1,0 +1,37 @@
+case_name: fraud
+
+data:
+  n_rows: 12000
+  random_seed: 42
+  test_size: 0.2
+  fraud_rate: 0.012
+
+model:
+  type: logistic_regression
+  params:
+    C: 1.0
+    max_iter: 300
+    class_weight: balanced
+
+features:
+  target: is_fraud
+  categorical:
+    - merchant_category
+    - channel
+    - country
+  numeric:
+    - transaction_amount
+    - device_trust_score
+    - velocity_1h
+    - velocity_24h
+    - geo_distance_km
+    - account_age_days
+    - prior_chargebacks
+    - hour_of_day
+
+business:
+  review_cost: 0.80
+  friction_cost_fp: 3.50
+  save_rate_tp: 0.90
+  loss_rate_fn: 1.00
+  chargeback_fee_fn: 15.00
