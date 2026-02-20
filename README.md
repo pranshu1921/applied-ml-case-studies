@@ -1,6 +1,6 @@
 # Applied ML Case Studies (Business-First Portfolio)
 
-A portfolio of **realistic, business-driven machine learning case studies** — built like production work, not toy notebooks.
+A portfolio of **realistic, business-driven machine learning case studies** that simulate production work.
 
 This repo demonstrates how ML is actually used in companies:
 
