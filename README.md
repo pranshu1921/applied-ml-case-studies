@@ -1,29 +1,21 @@
-# Applied ML Case Studies (Business-First Portfolio)
+# Applied ML Case Studies: Business-Driven Machine Learning
 
-A portfolio of **realistic, business-driven machine learning case studies** that simulate production work.
+Production-oriented ML case studies that show how predictions become decisions.
 
-This repo demonstrates how ML is actually used in companies:
-
-- **Problem framing + KPIs**
-- Data + feature engineering
-- Modeling and evaluation
-- **Decision thresholds + cost/benefit tradeoffs**
-- Reproducible runs with generated artifacts (**plots, metrics, reports**)
-
-Unlike typical “model demo” repos, this project shows how predictions become **decisions**.
+Each case study covers the full workflow: problem framing, feature engineering, modeling, evaluation, and threshold selection based on business cost and benefit. The emphasis is on workflow correctness and business reasoning rather than leaderboard optimization.
 
 ---
 
-## Featured Case Studies (Ready to Run)
+## Case Studies
 
-### 1) Customer Churn Prediction (Product / Subscription)
+### Customer Churn Prediction
 
-Predict customers likely to churn and recommend an action threshold based on **business cost vs benefit**.
+Predict customers likely to churn and recommend an operating threshold based on business cost versus benefit tradeoffs.
+
+The model is evaluated not just on AUC but on the cost of false negatives (lost customers) versus the cost of false positives (unnecessary retention spend). The selected threshold reflects that business logic, not just statistical performance.
 
 Run:
 ```bash
-python -m case_studies.churn.run_all
-# or
 make churn
 ```
 
@@ -33,20 +25,18 @@ Outputs:
 - `artifacts/churn/plots/*.png`
 - `artifacts/churn/model.joblib`
 
-📁 Location: `case_studies/churn/`
+Location: `case_studies/churn/`
 
 ---
 
-### 2) Fraud Detection (Payments / Risk)
+### Fraud Detection
 
-Detect fraudulent transactions and select an operating threshold using **expected dollar impact** (review cost vs prevented fraud loss vs false-positive friction).
+Detect fraudulent transactions and select an operating threshold using expected dollar impact — review cost versus prevented fraud loss versus false-positive friction.
 
-Why it matters: fraud is highly imbalanced, so this case prioritizes **Precision–Recall** and chooses the operating threshold by **expected dollar impact**, not accuracy.
+Fraud is highly imbalanced, so this case prioritizes Precision-Recall over accuracy and selects the threshold by expected dollar impact per 10,000 transactions rather than by a statistical metric alone.
 
 Run:
 ```bash
-python -m case_studies.fraud.run_all
-# or
 make fraud
 ```
 
@@ -56,39 +46,61 @@ Outputs:
 - `artifacts/fraud/plots/*.png`
 - `artifacts/fraud/model.joblib`
 
-📁 Location: `case_studies/fraud/`
+Location: `case_studies/fraud/`
+
+---
+
+## Performance Results
+
+Run both pipelines locally to generate actual metrics. Results are saved automatically to `artifacts/*/metrics.json` and summarized in `reports/`.
+
+### Churn Model
+
+| Metric | Value |
+|--------|-------|
+| AUC-ROC | run `make churn` to generate |
+| Precision at selected threshold | run `make churn` to generate |
+| Recall at selected threshold | run `make churn` to generate |
+
+### Fraud Model
+
+| Metric | Value |
+|--------|-------|
+| AUC-PR | run `make fraud` to generate |
+| Precision at operating threshold | run `make fraud` to generate |
+| Expected dollar impact per 10K transactions | run `make fraud` to generate |
 
 ---
 
 ## Tech Stack
 
-- **Python**: pandas, numpy  
-- **Modeling**: scikit-learn  
-- **Artifacts**: joblib + JSON  
-- **Plots**: matplotlib  
-- **Config**: YAML  
-- **Quality-of-life**: Makefile + GitHub Actions (CI)
+- **Python**: pandas, numpy
+- **Modeling**: scikit-learn
+- **Artifacts**: joblib and JSON
+- **Plots**: matplotlib
+- **Config**: YAML
+- **Automation**: Makefile and GitHub Actions CI
 
 ---
 
 ## Project Structure
 
-```text
+```
 applied-ml-case-studies/
-├─ case_studies/
-│  ├─ churn/
-│  ├─ fraud/
-│  └─ _shared/
-├─ data/
-│  ├─ raw/
-│  └─ processed/
-├─ artifacts/
-│  ├─ churn/
-│  └─ fraud/
-├─ reports/
-├─ requirements.txt
-├─ Makefile
-└─ .github/workflows/ci.yml
+├── case_studies/
+│   ├── churn/
+│   ├── fraud/
+│   └── _shared/
+├── data/
+│   ├── raw/
+│   └── processed/
+├── artifacts/
+│   ├── churn/
+│   └── fraud/
+├── reports/
+├── requirements.txt
+├── Makefile
+└── .github/workflows/ci.yml
 ```
 
 ---
@@ -100,10 +112,8 @@ git clone https://github.com/pranshu1921/applied-ml-case-studies.git
 cd applied-ml-case-studies
 
 python -m venv .venv
-# mac/linux
-source .venv/bin/activate
-# windows powershell
-# .\.venv\Scripts\Activate.ps1
+source .venv/bin/activate        # Mac/Linux
+# .\.venv\Scripts\Activate.ps1  # Windows PowerShell
 
 pip install -U pip
 pip install -r requirements.txt
@@ -118,7 +128,7 @@ make fraud
 
 ---
 
-## Generated Artifacts (Examples)
+## Generated Artifacts
 
 These images are produced by running the pipelines locally.
 
@@ -127,7 +137,7 @@ These images are produced by running the pipelines locally.
 **Pipeline execution**
 ![Fraud pipeline run](assets/fraud_run_terminal.png)
 
-**Precision–Recall curve (key metric for imbalanced fraud)**
+**Precision-Recall curve**
 ![Fraud PR](assets/fraud_pr_curve.png)
 
 **Generated report**
@@ -146,15 +156,21 @@ These images are produced by running the pipelines locally.
 
 ---
 
-## Notes on Realism
+## A Note on the Datasets
 
-This project uses **synthetic-but-realistic datasets** so anyone can run the pipelines without external downloads or licensing issues.  
-The emphasis is on **workflow correctness and business reasoning**, not Kaggle-style leaderboard tuning.
+Both case studies use synthetic but realistic datasets so anyone can run the pipelines without external downloads or licensing requirements. The data distributions and class imbalances are designed to reflect real-world characteristics of churn and fraud problems.
 
 ---
 
-## Author
+## License
 
-**Pranshu Kumar Premi**  
-LinkedIn: https://www.linkedin.com/in/pranshu-kumar  
-Email: pranshukumarpremi@gmail.com
+MIT
+
+---
+
+## Contact
+
+**Pranshu Kumar**
+- GitHub: [github.com/pranshu1921](https://github.com/pranshu1921)
+- LinkedIn: [linkedin.com/in/pranshu-kumar](https://www.linkedin.com/in/pranshu-kumar)
+- Email: pranshukumarpremi@gmail.com
